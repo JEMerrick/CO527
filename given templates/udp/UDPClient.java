@@ -38,24 +38,50 @@ public class UDPClient {
 		countTo = Integer.parseInt(args[2]);
 
 
-		// TO-DO: Construct UDP client class and try to send messages
+		// Construct UDP client class and try to send messages
+		UDPClient myClient = new UDPClient();
+		
 	}
 
 	public UDPClient() {
 		// TO-DO: Initialise the UDP socket for sending data
+		try {
+            sendSoc = new DataGramSocket();
+        } catch(SocketException soEx) {
+        } catch(SecurityException secEx) {
+        } catch(Exception e) {
+        }
 	}
 
 	private void testLoop(InetAddress serverAddr, int recvPort, int countTo) {
-		int				tries = 0;
+		int tries = 0;
 
-		// TO-DO: Send the messages to the server
+		//Send the messages to the server
+		try {
+            sendSoc.connect(serverAddr, recvPort);
+            while(tries <= countTo){
+                this.send(Math.random().toString(), serverAddr, recvPort);
+                tries++;
+            }
+        } catch(Exception e) {
+        }
 	}
 
 	private void send(String payload, InetAddress destAddr, int destPort) {
-		int				payloadSize;
-		byte[]				pktData;
-		DatagramPacket		pkt;
-
-		// TO-DO: build the datagram packet and send it to the server
+		int payloadSize = payload.size();
+		byte[] pktData = payload.getBytes();
+		//build datagram packet
+		DatagramPacket pkt = new DatagramPacket(pktData, payloadSize, destAddr, destPort);
+		
+		//send it to the server
+		try{
+            sendSoc.send(pkt);
+		} catch(Exception e) {
+		}
+		
 	}
+
+    public void runLoop(InetAddress serverAddr, int recvPort, int countTo){
+        testLoop(serverAddr, recvPort, countTo);
+    }
 }
