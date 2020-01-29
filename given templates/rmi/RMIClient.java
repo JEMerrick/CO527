@@ -30,8 +30,12 @@ public class RMIClient {
 		}
 		
 		// TO-DO: Bind to RMIServer
-
+		RMIServerI remoteObject = (RMIServerI)Naming.lookup("//" + serverAddress + ":" + REGISTRY_PORT + "/" + remoteObjectName);
+		
 		// TO-DO: Attempt to send messages the specified number of times
+		while ( count < numMessages ){
+			remoteObject.receiveMessage(new MessageInfo(numMessages, i));
+		}
 
 	}
 }
