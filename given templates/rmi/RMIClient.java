@@ -25,10 +25,22 @@ public class RMIClient {
 		int numMessages = Integer.parseInt(args[1]);
 
 		// TO-DO: Initialise Security Manager
-
+		if (System.getSecurityManager() == NULL) {
+			System.setSecurityManager(new SecurityManager());
+		}
+		
 		// TO-DO: Bind to RMIServer
-
+		try {
+			RMIServer bigboi = (RMIServer)Naming.lookup(urlServer);
+		} catch (Exception e){
+		}
+		
 		// TO-DO: Attempt to send messages the specified number of times
+		int count = 0;
+		while ( count < numMessages ){
+			bigboi.receiveMessage(new MessageInfo(numMessages, i));
+			count++;
+		}
 
 	}
 }
