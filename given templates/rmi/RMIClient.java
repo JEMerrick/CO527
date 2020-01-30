@@ -33,8 +33,10 @@ public class RMIClient {
 		RMIServerI remoteObject = (RMIServerI)Naming.lookup("//" + serverAddress + ":" + REGISTRY_PORT + "/" + remoteObjectName);
 		
 		// TO-DO: Attempt to send messages the specified number of times
+		int count = 0;
 		while ( count < numMessages ){
 			remoteObject.receiveMessage(new MessageInfo(numMessages, i));
+			count++;
 		}
 
 	}
