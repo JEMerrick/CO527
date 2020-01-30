@@ -71,7 +71,7 @@ public class UDPServer {
 		if(totalMessages - msg.messageNum == 1){
             close = true;
             System.out.print("\nThe messages that were lost are: ");
-            for(int i = 0; i < receivedMessages.length(); i++){
+            for(int i = 0; i < receivedMessages.length; i++){
                 if(receivedMessages[i] == 0){
                     System.out.print(i + " ");
                 }
