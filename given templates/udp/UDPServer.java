@@ -18,7 +18,7 @@ public class UDPServer {
 
 	private void run() {
         //set packet size
-		int pacSize = ;
+		int pacSize = 0;
 		byte[] pacData;
 		DatagramPacket pac;
 		
