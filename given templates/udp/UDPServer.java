@@ -17,34 +17,78 @@ public class UDPServer {
 	private boolean close;
 
 	private void run() {
-		int				pacSize;
-		byte[]			pacData;
-		DatagramPacket 	pac;
-
-		// TO-DO: Receive the messages and process them by calling processMessage(...).
-		//        Use a timeout (e.g. 30 secs) to ensure the program doesn't block forever
-
+        //set packet size
+		int pacSize = ;
+		byte[] pacData;
+		DatagramPacket pac;
+		
+		//setting the timeout value (in ms)
+        int timeout = 30000;
+		close = false;
+		
+		while(close == false){
+            //create a new packet of data
+            pacData = new byte[packSize];
+            //make a datagramPacket for this data
+            recvPac = new DatagramPacket(pacData, pacSize);
+            try{
+                /*enables/disables 'so_timeout' in ms, when recieve() is called the 
+                recvSoc will only block for this amount of time, if the timeout expires 
+                an exception is raised*/
+                recvSoc.setSoTimeout(timeout);
+                recvSoc.recieve(recvPac);
+                //getData returns data buffer, doing new string with this constructor removes any excess and passes only the string required
+                
+                String dataIn = new String(pac.getData(), pac.getOffset(), pac.getLength());
+                processMessage(dataIn);
+            }catch(Exception e) {
+            }
 	}
 
 	public void processMessage(String data) {
 
 		MessageInfo msg = null;
 
-		// TO-DO: Use the data to construct a new MessageInfo object
-
+        try{
+            msg = new MessageInfo(data);
+        }
+        catch(Exception e){
+        }
+        
 		// TO-DO: On receipt of first message, initialise the receive buffer
+		if(totalMessages < 0){
+            //from common/messageInfo
+            totalMessages = msg.totalMessages
+            receivedMessages = new int[totalMessages];
+            System.out.print("Recieving " + totalMessages + " messages\n");
+        }
+        
+        //set the message index in the recieved messages array to 1 to indicate they have been recieved
+        receivedMessages[msg.messageNum] = 1;
+        System.out.print(msg.toString());
 
-		// TO-DO: Log receipt of the message
-
-		// TO-DO: If this is the last expected message, then identify
-		//        any missing messages
+		//identifies any missing messages by seeing if their index = 0 and prints the index of missing ones
+		if(totalMessages - msg.messageNum == 1){
+            close = true;
+            System.out.print("\nThe messages that were lost are: ");
+            for(int i = 0; i < receivedMessages.length(); i++){
+                if(receivedMessages[i] == 0){
+                    System.out.print(i + " ");
+                }
+            }
 
 	}
 
 
 	public UDPServer(int rp) {
-		// TO-DO: Initialise UDP socket for receiving data
-
+		
+		//constructs a datagram socket and binds it to the specified port on the local host machince
+        try{
+            recvSoc = new DatagramSocket(rp);
+        } catch(Exception e) {
+        }
+        
+        
 		// Done Initialisation
 		System.out.println("UDPServer ready");
 	}
@@ -60,6 +104,8 @@ public class UDPServer {
 		recvPort = Integer.parseInt(args[0]);
 
 		// TO-DO: Construct Server object and start it by calling run().
+		UDPServer myServer = new UDPServer(recvPort);
+		myServer.run();
 	}
 
 }
