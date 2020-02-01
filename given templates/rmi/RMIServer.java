@@ -40,6 +40,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 			System.out.printIn("No. lost: " + string(lost));
 
 		}
+    }
 
 
 	public static void main(String[] args) {
