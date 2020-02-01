@@ -33,7 +33,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 		//        any missing messages
 		if(msg.messageNum == totalMessages -1){
 			int lost = 0;
-			for(int i = 0; i < receiveMessages.length; i++){
+			for(int i = 0; i < receivedMessages.length; i++){
 				lost++;
 			}
 			double percentage_loss = ((totalMessages - lost) / totalMessages) * 100;
