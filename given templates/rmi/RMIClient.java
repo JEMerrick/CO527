@@ -32,15 +32,14 @@ public class RMIClient {
 		// TO-DO: Bind to RMIServer
 		try {
 			RMIServerI bigboi = (RMIServerI)Naming.lookup(urlServer);
+            for(int i = 0; i < numMessages; i++){
+			bigboi.receiveMessage(new MessageInfo(numMessages, i));
+		}
 		} catch (Exception e){
 		}
 		
 		// TO-DO: Attempt to send messages the specified number of times
-		int count = 0;
-		while ( count < numMessages ){
-			bigboi.receiveMessage(new MessageInfo(numMessages, i));
-			count++;
-		}
+		
 
 	}
 }
