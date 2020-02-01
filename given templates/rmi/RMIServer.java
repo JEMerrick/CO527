@@ -37,7 +37,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 				lost++;
 			}
 			double percentage_loss = ((totalMessages - lost) / totalMessages) * 100;
-			System.out.printIn("No. lost: " + string(lost));
+			System.out.println("No. lost: " + lost);
 
 		}
     }
