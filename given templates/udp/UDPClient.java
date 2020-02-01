@@ -43,7 +43,7 @@ public class UDPClient {
 	public UDPClient() {
 		// TO-DO: Initialise the UDP socket for sending data
 		try {
-            sendSoc = new DataGramSocket();
+            sendSoc = new DatagramSocket();
         } catch(SocketException soEx) {
         } catch(SecurityException secEx) {
         } catch(Exception e) {
@@ -57,7 +57,8 @@ public class UDPClient {
 		try {
             sendSoc.connect(serverAddr, recvPort);
             while(tries <= countTo){
-                this.send(Math.random().toString(), serverAddr, recvPort);
+                String myString = countTo + ";" + tries;
+                this.send(payload, serverAddr, recvPort);
                 tries++;
             }
         } catch(Exception e) {
