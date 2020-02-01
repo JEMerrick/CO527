@@ -57,7 +57,7 @@ public class UDPClient {
 		try {
             sendSoc.connect(serverAddr, recvPort);
             while(tries <= countTo){
-                String myString = countTo + ";" + tries;
+                String payload = countTo + ";" + tries;
                 this.send(payload, serverAddr, recvPort);
                 tries++;
             }
@@ -66,7 +66,7 @@ public class UDPClient {
 	}
 
 	private void send(String payload, InetAddress destAddr, int destPort) {
-		int payloadSize = payload.size();
+		int payloadSize = payload.length();
 		byte[] pktData = payload.getBytes();
 		//build datagram packet
 		DatagramPacket pkt = new DatagramPacket(pktData, payloadSize, destAddr, destPort);
