@@ -31,7 +31,7 @@ public class RMIClient {
 		
 		// TO-DO: Bind to RMIServer
 		try {
-			RMIServer bigboi = (RMIServer)Naming.lookup(urlServer);
+			RMIServerI bigboi = (RMIServerI)Naming.lookup(urlServer);
 		} catch (Exception e){
 		}
 		
