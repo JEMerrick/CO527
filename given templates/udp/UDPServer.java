@@ -28,15 +28,15 @@ public class UDPServer {
 		
 		while(close == false){
             		//create a new packet of data
-            		pacData = new byte[packSize];
+            		pacData = new byte[pacSize];
             		//make a datagramPacket for this data
-            		recvPac = new DatagramPacket(pacData, pacSize);
+            		pac = new DatagramPacket(pacData, pacSize);
            		try{
               		  	/*enables/disables 'so_timeout' in ms, when recieve() is called the 
               		 	 recvSoc will only block for this amount of time, if the timeout expires 
               		 	 an exception is raised*/
               		  	recvSoc.setSoTimeout(timeout);
-              		  	recvSoc.recieve(recvPac);
+              		  	recvSoc.receive(pac);
                			 //getData returns data buffer, doing new string with this constructor removes any excess and passes only the string required
                 		String dataIn = new String(pac.getData(), pac.getOffset(), pac.getLength());
                 		processMessage(dataIn);
