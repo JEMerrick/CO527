@@ -1,6 +1,3 @@
-/*
- * Created on 01-Mar-2016
- */
 package rmi;
 
 import java.net.MalformedURLException;
@@ -13,15 +10,12 @@ import java.util.Arrays;
 import common.*;
 
 public class RMIServer extends UnicastRemoteObject implements RMIServerI {
-
 	private int totalMessages = -1;
 	private int[] receivedMessages;
 
-	public RMIServer() throws RemoteException {
-	}
+	public RMIServer() throws RemoteException {}
 
 	public void receiveMessage(MessageInfo msg) throws RemoteException {
-
 		// TO-DO: On receipt of first message, initialise the receive buffer
 		totalMessages = msg.totalMessages;
 		receivedMessages = new int[totalMessages];
@@ -31,20 +25,18 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 
 		// TO-DO: If this is the last expected message, then identify
 		//        any missing messages
-		if(msg.messageNum == totalMessages -1){
+		if(msg.messageNum == totalMessages -1) {
 			int lost = 0;
-			for(int i = 0; i < receivedMessages.length; i++){
+			for(int i = 0; i < receivedMessages.length; i++) {
 				lost++;
 			}
 			double percentage_loss = ((totalMessages - lost) / totalMessages) * 100;
 			System.out.println("No. lost: " + lost);
-
 		}
     }
 
 
 	public static void main(String[] args) {
-
 		RMIServer rmis = null;
 
 		// TO-DO: Initialise Security Manager
@@ -57,19 +49,17 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
         try {
             RMIServer myServer = new RMIServer();
             rebindServer(args[0], myServer);
-        } catch (Exception e){
-        }
-		
-
+        } catch (Exception e) {
+			System.out.println("Exception while binding " + e.getMessage());
+		}
 	}
 
 	protected static void rebindServer(String serverURL, RMIServer server) {
-
 		// TO-DO:
 		// Start / find the registry (hint use LocateRegistry.createRegistry(...)
 		// If we *know* the registry is running we could skip this (eg run rmiregistry in the start script)
 		
-		try{
+		try {
             LocateRegistry.createRegistry(1099);
             
             // TO-DO:
@@ -78,7 +68,8 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
             // expects different things from the URL field.
             
             Naming.rebind(serverURL, server);
-        } catch (Exception e){
+        } catch (Exception e) {
+			System.out.println("Exception while.. i have no idea, fill up your try block " + e.getMessage());
         }
 	}
 }
