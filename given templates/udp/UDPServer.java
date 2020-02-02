@@ -24,7 +24,7 @@ public class UDPServer {
 	}
 	
 	private void run() {
-		int pacSize = 0;
+		int pacSize = 1024;
 		byte[] pacData;
 		DatagramPacket pac;
         int timeout = 30000;
@@ -46,7 +46,6 @@ public class UDPServer {
 
 	public void processMessage(String data) {
 		MessageInfo msg = null;
-
         try {
             msg = new MessageInfo(data);
         } catch(Exception e) {
@@ -63,14 +62,13 @@ public class UDPServer {
         System.out.print(msg.toString());
 
 		if(totalMessages - msg.messageNum == 1) {
-            close = true;
             System.out.print("\nThe messages that were lost are: ");
-            for(int i = 0; i < receivedMessages.length; i++){
+            for(int i = 0; i < receivedMessages.length - 1; i++){
                 if(receivedMessages[i] == 0){
                     System.out.print(i + " ");
                 }
             }
-
+            close = true;
 		}
 	}
 

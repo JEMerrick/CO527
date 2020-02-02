@@ -31,10 +31,15 @@ public class UDPClient {
 
 		try {
             sendSoc.connect(serverAddr, recvPort);
-            while(tries <= countTo){
+            while(tries < countTo){
                 String payload = countTo + ";" + tries;
+                System.out.println(payload);
                 this.send(payload, serverAddr, recvPort);
                 tries++;
+                if(tries == 10){
+                    tries++;
+                }
+                Thread.sleep(500);
             }
         } catch(Exception e) {
 			System.out.println("Exception while connecting " + e.getMessage());
@@ -42,9 +47,8 @@ public class UDPClient {
 	}
 
 	private void send(String payload, InetAddress destAddr, int destPort) {
-		int payloadSize = payload.length();
 		byte[] pktData = payload.getBytes();
-		DatagramPacket pkt = new DatagramPacket(pktData, payloadSize, destAddr, destPort);
+		DatagramPacket pkt = new DatagramPacket(pktData, pktData.length, destAddr, destPort);
 		
 		try {
             sendSoc.send(pkt);
@@ -77,6 +81,6 @@ public class UDPClient {
 		recvPort = Integer.parseInt(args[1]);
 		countTo = Integer.parseInt(args[2]);
 		UDPClient myClient = new UDPClient();
-		runLoop(serverAddr, recvPort, countTo);
+		myClient.runLoop(serverAddr, recvPort, countTo);
 	}
 }
