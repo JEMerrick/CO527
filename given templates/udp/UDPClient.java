@@ -77,5 +77,6 @@ public class UDPClient {
 		recvPort = Integer.parseInt(args[1]);
 		countTo = Integer.parseInt(args[2]);
 		UDPClient myClient = new UDPClient();
+		runLoop(serverAddr, recvPort, countTo);
 	}
 }

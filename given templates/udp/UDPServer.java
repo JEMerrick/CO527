@@ -14,7 +14,15 @@ public class UDPServer {
 	private int totalMessages = -1;
 	private int[] receivedMessages;
 	private boolean close;
-
+	
+    public UDPServer(int port) {
+        try {
+            recvSoc = new DatagramSocket(port);
+        } catch(Exception e) {
+			System.out.println("Exception while creating new socket " + e.getMessage());
+        }
+	}
+	
 	private void run() {
 		int pacSize = 0;
 		byte[] pacData;
@@ -66,13 +74,7 @@ public class UDPServer {
 		}
 	}
 
-	public UDPServer(int port) {
-        try {
-            recvSoc = new DatagramSocket(port);
-        } catch(Exception e) {
-			System.out.println("Exception while creating new socket " + e.getMessage());
-        }
-	}
+	
 
 	public static void main(String args[]) {
 		if (args.length < 1) {
