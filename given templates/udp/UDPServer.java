@@ -69,6 +69,11 @@ public class UDPServer {
                 }
             }
             close = true;
+		System.out.println("\nNumber of messages lost : " + count);
+	        double total = totalMessages;
+		double c = count;
+		double p = 100*c/total;
+		System.out.println("Percentage loss : " + p + "%");	
 		}
 	}
 
