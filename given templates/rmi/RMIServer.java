@@ -24,7 +24,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 	public void receiveMessage(MessageInfo msg) throws RemoteException {
 
 		// TO-DO: On receipt of first message, initialise the receive buffer
-		if(totalMessages == 0){
+		if(totalMessages == -1){
             totalMessages = msg.totalMessages;
             receivedMessages = new int[totalMessages];
         }
@@ -34,11 +34,13 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 
 		// TO-DO: If this is the last expected message, then identify
 		//        any missing messages
-		System.out.println(totalMessages);
+		System.out.println(msg.messageNum);
 		if(msg.messageNum == totalMessages -1){
 			int lost = 0;
 			for(int i = 0; i < receivedMessages.length; i++){
-				lost++;
+				if(receivedMessages[i] != 1){
+					lost++;
+				}
 			}
 			double percentage_loss = ((totalMessages - lost) / totalMessages) * 100;
 			System.out.println("No. lost: " + lost);
