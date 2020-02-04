@@ -48,10 +48,6 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 
 
 	public static void main(String[] args) {
-		if(args.length == 0){
-		}
-	    System.out.println(args[0]);
-		String myName = args[0];
 		// TO-DO: Initialise Security Manager
 		if (System.getSecurityManager() == null){
 			System.setSecurityManager(new SecurityManager());
