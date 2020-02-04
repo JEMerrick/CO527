@@ -6,6 +6,7 @@ package rmi;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Arrays;
@@ -23,8 +24,10 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 	public void receiveMessage(MessageInfo msg) throws RemoteException {
 
 		// TO-DO: On receipt of first message, initialise the receive buffer
-		totalMessages = msg.totalMessages;
-		receivedMessages = new int[totalMessages];
+		if(totalMessages == 0){
+            totalMessages = msg.totalMessages;
+            receivedMessages = new int[totalMessages];
+        }
 
 		// TO-DO: Log receipt of the message
 		receivedMessages[msg.messageNum] = 1;
@@ -58,7 +61,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 		// TO-DO: Bind to RMI registry
         try {
             RMIServer myServer = new RMIServer();
-            rebindServer(myName, myServer);
+            rebindServer("fred", myServer);
         } catch (Exception e){
 					System.out.println("Exception when making new server/rebinding");
 					System.exit(-1);
@@ -74,14 +77,14 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 		// If we *know* the registry is running we could skip this (eg run rmiregistry in the start script)
 
 		try{
-            LocateRegistry.createRegistry(1099);
+            Registry registry = LocateRegistry.getRegistry();
 
             // TO-DO:
             // Now rebind the server to the registry (rebind replaces any existing servers bound to the serverURL)
             // Note - Registry.rebind (as returned by createRegistry / getRegistry) does something similar but
             // expects different things from the URL field.
 
-            Naming.rebind(serverURL, server);
+            registry.rebind(serverURL, server);
         } catch (Exception e){
 					e.printStackTrace();
 					System.exit(-1);
