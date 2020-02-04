@@ -46,9 +46,8 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 
 	public static void main(String[] args) {
 		if(args.length == 0){
-			System.out.println("ytrfdsxc");
 		}
-	  System.out.println(args[0]);
+	    System.out.println(args[0]);
 		String myName = args[0];
 		// TO-DO: Initialise Security Manager
 		if (System.getSecurityManager() == null){
@@ -84,7 +83,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 
             Naming.rebind(serverURL, server);
         } catch (Exception e){
-					System.out.println("Exception in rebindserver function");
+					e.printStackTrace();
 					System.exit(-1);
         }
 	}
