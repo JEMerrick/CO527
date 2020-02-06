@@ -36,10 +36,7 @@ public class UDPClient {
                 System.out.println(payload);
                 this.send(payload, serverAddr, recvPort);
                 tries++;
-                if(tries == 10){
-                    tries++;
-                }
-                Thread.sleep(500);
+                //Thread.sleep(500);
             }
         } catch(Exception e) {
 			System.out.println("Exception while connecting " + e.getMessage());

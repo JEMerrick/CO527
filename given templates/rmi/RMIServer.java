@@ -61,10 +61,9 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
             RMIServer myServer = new RMIServer();
             rebindServer("fred", myServer);
         } catch (Exception e){
-					System.out.println("Exception when making new server/rebinding");
+					System.out.println("Exception when making new server/rebinding" + e.getMessage());
 					System.exit(-1);
         }
-
 
 	}
 
